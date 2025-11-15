@@ -73,3 +73,4 @@ IntelliJ IDEA / Eclipse - IDE de desenvolvimento
 MySQL Workbench - Gerenciamento do banco de dados
 Postman - Testes de API
 Git - Controle de versão
+
