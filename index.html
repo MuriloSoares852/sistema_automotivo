@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Automotivo - Gestão de Veículos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .filters {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .filters h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .vehicles-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .vehicles-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .vehicles-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+
+        .error {
+            background: #ff4444;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .vehicles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .vehicle-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            background: #f9f9f9;
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .vehicle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .vehicle-title {
+            font-size: 1.3em;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .vehicle-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-disponivel {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-vendido {
+            background: #dc3545;
+            color: white;
+        }
+
+        .status-reservado {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .status-manutencao {
+            background: #6c757d;
+            color: white;
+        }
+
+        .vehicle-info {
+            display: grid;
+            gap: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-label {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .vehicle-price {
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: 700;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .vehicles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Cabeçalho -->
+    <div class="header">
+        <h1>🚗 Sistema Automotivo</h1>
+        <p>Gestão de Estoque de Veículos</p>
+    </div>
+
+    <!-- Estatísticas -->
+    <div class="stats">
+        <div class="stat-card">
+            <h3 id="totalVeiculos">0</h3>
+            <p>Total de Veículos</p>
+        </div>
+        <div class="stat-card">
+            <h3 id="totalDisponiveis">0</h3>
+            <p>Disponíveis</p>
+        </div>
+        <div class="stat-card">
+            <h3 id="totalVendidos">0</h3>
+            <p>Vendidos</p>
+        </div>
+        <div class="stat-card">
+            <h3 id="totalReservados">0</h3>
+            <p>Reservados</p>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters">
+        <h2>🔍 Filtros de Busca</h2>
+        <div class="filter-grid">
+            <div class="filter-group">
+                <label for="filtroMarca">Marca</label>
+                <select id="filtroMarca">
+                    <option value="">Todas as marcas</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filtroStatus">Status</label>
+                <select id="filtroStatus">
+                    <option value="">Todos os status</option>
+                    <option value="Disponível">Disponível</option>
+                    <option value="Vendido">Vendido</option>
+                    <option value="Reservado">Reservado</option>
+                    <option value="Manutenção">Manutenção</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filtroAno">Ano</label>
+                <input type="number" id="filtroAno" placeholder="Ex: 2023">
+            </div>
+            <div class="filter-group">
+                <label for="filtroPrecoMin">Preço Mínimo</label>
+                <input type="number" id="filtroPrecoMin" placeholder="Ex: 50000">
+            </div>
+            <div class="filter-group">
+                <label for="filtroPrecoMax">Preço Máximo</label>
+                <input type="number" id="filtroPrecoMax" placeholder="Ex: 150000">
+            </div>
+        </div>
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="aplicarFiltros()">🔍 Buscar Veículos</button>
+            <button class="btn btn-secondary" onclick="limparFiltros()">🔄 Limpar Filtros</button>
+        </div>
+    </div>
+
+    <!-- Lista de Veículos -->
+    <div class="vehicles-container">
+        <div class="vehicles-header">
+            <h2>📋 Veículos Cadastrados</h2>
+            <span id="resultadosCount"></span>
+        </div>
+        <div id="mensagemErro"></div>
+        <div id="loading" class="loading" style="display: none;">
+            Carregando veículos...
+        </div>
+        <div id="vehiclesGrid" class="vehicles-grid"></div>
+    </div>
+</div>
+
+<script>
+    const API_URL = 'http://localhost:8080/api';
+    let todosVeiculos = [];
+
+    // Carrega dados iniciais
+    window.onload = function() {
+        carregarMarcas();
+        carregarVeiculos();
+    };
+
+    // Carregar marcas para o filtro
+    async function carregarMarcas() {
+        try {
+            const response = await fetch(`${API_URL}/marca/listarMarcas`);
+            const marcas = await response.json();
+
+            const selectMarca = document.getElementById('filtroMarca');
+            marcas.forEach(marca => {
+                const option = document.createElement('option');
+                option.value = marca.nome;
+                option.textContent = marca.nome;
+                selectMarca.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Erro ao carregar marcas:', error);
+        }
+    }
+
+    // Carregar todos os veículos
+    async function carregarVeiculos() {
+        mostrarLoading(true);
+        limparErro();
+
+        try {
+            const response = await fetch(`${API_URL}/veiculo/listarVeiculos`);
+
+            if (!response.ok) {
+                throw new Error('Erro ao carregar veículos');
+            }
+
+            todosVeiculos = await response.json();
+            exibirVeiculos(todosVeiculos);
+            atualizarEstatisticas(todosVeiculos);
+        } catch (error) {
+            mostrarErro('Erro ao carregar veículos. Verifique se o servidor está rodando em http://localhost:8080');
+            console.error('Erro:', error);
+        } finally {
+            mostrarLoading(false);
+        }
+    }
+
+    // Aplicar filtros
+    function aplicarFiltros() {
+        const marca = document.getElementById('filtroMarca').value;
+        const status = document.getElementById('filtroStatus').value;
+        const ano = document.getElementById('filtroAno').value;
+        const precoMin = document.getElementById('filtroPrecoMin').value;
+        const precoMax = document.getElementById('filtroPrecoMax').value;
+
+        let veiculosFiltrados = todosVeiculos;
+
+        // Filtrar por marca
+        if (marca) {
+            veiculosFiltrados = veiculosFiltrados.filter(v =>
+                v.modelo?.marca?.nome === marca
+            );
+        }
+
+        // Filtrar por status
+        if (status) {
+            veiculosFiltrados = veiculosFiltrados.filter(v =>
+                v.status === status
+            );
+        }
+
+        // Filtrar por ano
+        if (ano) {
+            veiculosFiltrados = veiculosFiltrados.filter(v =>
+                v.ano == ano
+            );
+        }
+
+        // Filtrar por preço mínimo
+        if (precoMin) {
+            veiculosFiltrados = veiculosFiltrados.filter(v =>
+                v.preco >= parseFloat(precoMin)
+            );
+        }
+
+        // Filtrar por preço máximo
+        if (precoMax) {
+            veiculosFiltrados = veiculosFiltrados.filter(v =>
+                v.preco <= parseFloat(precoMax)
+            );
+        }
+
+        exibirVeiculos(veiculosFiltrados);
+    }
+
+    // Limpar filtros
+    function limparFiltros() {
+        document.getElementById('filtroMarca').value = '';
+        document.getElementById('filtroStatus').value = '';
+        document.getElementById('filtroAno').value = '';
+        document.getElementById('filtroPrecoMin').value = '';
+        document.getElementById('filtroPrecoMax').value = '';
+        exibirVeiculos(todosVeiculos);
+    }
+
+    // Exibir veículos na tela
+    function exibirVeiculos(veiculos) {
+        const grid = document.getElementById('vehiclesGrid');
+        const countSpan = document.getElementById('resultadosCount');
+
+        countSpan.textContent = `${veiculos.length} veículo(s) encontrado(s)`;
+
+        if (veiculos.length === 0) {
+            grid.innerHTML = '<div class="no-results">Nenhum veículo encontrado com os filtros aplicados.</div>';
+            return;
+        }
+
+        grid.innerHTML = veiculos.map(veiculo => `
+            <div class="vehicle-card">
+                <div class="vehicle-header">
+                    <div class="vehicle-title">
+                        ${veiculo.modelo?.marca?.nome || 'N/A'} ${veiculo.modelo?.nome || 'N/A'}
+                    </div>
+                    <span class="vehicle-status status-${veiculo.status?.toLowerCase().replace('í', 'i').replace('ã', 'a')}">
+                        ${veiculo.status || 'N/A'}
+                    </span>
+                </div>
+                <div class="vehicle-info">
+                    <div class="info-row">
+                        <span class="info-label">Ano:</span>
+                        <span class="info-value">${veiculo.ano || 'N/A'}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Cor:</span>
+                        <span class="info-value">${veiculo.cor || 'N/A'}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Quilometragem:</span>
+                        <span class="info-value">${formatarKm(veiculo.quilometragem)}</span>
+                    </div>
+                </div>
+                <div class="vehicle-price">
+                    ${formatarPreco(veiculo.preco)}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Atualizar estatísticas
+    function atualizarEstatisticas(veiculos) {
+        document.getElementById('totalVeiculos').textContent = veiculos.length;
+        document.getElementById('totalDisponiveis').textContent =
+            veiculos.filter(v => v.status === 'Disponível').length;
+        document.getElementById('totalVendidos').textContent =
+            veiculos.filter(v => v.status === 'Vendido').length;
+        document.getElementById('totalReservados').textContent =
+            veiculos.filter(v => v.status === 'Reservado').length;
+    }
+
+    // Formatar preço
+    function formatarPreco(preco) {
+        if (!preco) return 'R$ 0,00';
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(preco);
+    }
+
+    // Formatar quilometragem
+    function formatarKm(km) {
+        if (!km) return '0 km';
+        return new Intl.NumberFormat('pt-BR').format(km) + ' km';
+    }
+
+    // Mostrar/ocultar loading
+    function mostrarLoading(mostrar) {
+        document.getElementById('loading').style.display = mostrar ? 'block' : 'none';
+        document.getElementById('vehiclesGrid').style.display = mostrar ? 'none' : 'grid';
+    }
+
+    // Mostrar erro
+    function mostrarErro(mensagem) {
+        const divErro = document.getElementById('mensagemErro');
+        divErro.innerHTML = `<div class="error">${mensagem}</div>`;
+    }
+
+    // Limpar erro
+    function limparErro() {
+        document.getElementById('mensagemErro').innerHTML = '';
+    }
+</script>
+</body>
+</html>
