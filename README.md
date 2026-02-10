@@ -1,54 +1,54 @@
 # sistema_automotivo
 
-🎯 Sobre o Projeto
+Sobre o Projeto
 O Sistema Automotivo é uma aplicação web desenvolvida para facilitar a gestão de estoque de veículos em concessionárias. O sistema permite cadastrar, consultar, atualizar e remover veículos, além de oferecer filtros avançados por marca, modelo, preço, ano e status.
 Problema que Resolve
 Muitas concessionárias ainda utilizam planilhas do Excel para gerenciar seus estoques, o que causa:
 
-❌ Informações desatualizadas
-❌ Dificuldade de acesso simultâneo
-❌ Perda de dados
-❌ Consultas lentas e confusas
+Informações desatualizadas
+Dificuldade de acesso simultâneo
+Perda de dados
+Consultas lentas e confusas
 
 Solução Oferecida
-✅ Sistema web centralizado
-✅ Acesso simultâneo para múltiplos usuários
-✅ Consultas rápidas com filtros avançados
-✅ Dados seguros e organizados
-✅ Interface intuitiva e moderna
+Sistema web centralizado
+Acesso simultâneo para múltiplos usuários
+Consultas rápidas com filtros avançados
+Dados seguros e organizados
+Interface intuitiva e moderna
 
-⚡ Funcionalidades
-🔹 Gestão de Veículos
+Funcionalidades
+Gestão de Veículos
 
-✅ Cadastrar novos veículos
-✅ Listar todos os veículos
-✅ Atualizar informações (preço, quilometragem, status)
-✅ Remover veículos vendidos ou descontinuados
+Cadastrar novos veículos
+Listar todos os veículos
+Atualizar informações (preço, quilometragem, status)
+Remover veículos vendidos ou descontinuados
 
-🔹 Gestão de Marcas e Modelos
+Gestão de Marcas e Modelos
 
-✅ Cadastrar marcas (Toyota, Honda, Ford, etc.)
-✅ Cadastrar modelos vinculados às marcas
-✅ Atualizar e remover marcas/modelos
+Cadastrar marcas (Toyota, Honda, Ford, etc.)
+Cadastrar modelos vinculados às marcas
+Atualizar e remover marcas/modelos
 
-🔹 Filtros e Consultas
+Filtros e Consultas
 
-✅ Filtrar por marca
-✅ Filtrar por modelo
-✅ Filtrar por status (Disponível, Vendido, Reservado)
-✅ Filtrar por ano de fabricação
-✅ Filtrar por faixa de preço
-✅ Combinar múltiplos filtros
+Filtrar por marca
+Filtrar por modelo
+Filtrar por status (Disponível, Vendido, Reservado)
+Filtrar por ano de fabricação
+Filtrar por faixa de preço
+Combinar múltiplos filtros
 
-🔹 Relatórios
+Relatórios
 
-✅ Total de veículos em estoque
-✅ Veículos disponíveis
-✅ Veículos vendidos
-✅ Veículos reservados
+Total de veículos em estoque
+Veículos disponíveis
+Veículos vendidos
+Veículos reservados
 
 
-🛠️ Tecnologias
+Tecnologias
 Backend
 
 Java 11 - Linguagem de programação
